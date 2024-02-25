@@ -3,12 +3,14 @@ from json import dumps
 from json import JSONEncoder
 
 class Twit:
-    def __init__(self, text):
-        self.text = text
+    def __init__(self, body, author):
+        self.body = body
+        self.author = author
 
     def to_dict(self):
         return {
-            'text': self.text
+            'body': self.body,
+            'author': self.author
         }
 
 twits = []
@@ -25,13 +27,8 @@ app.json_encoder = CustomJSONEncoder
 
 @app.route('/get_twit', methods=['GET'])
 def get_twit():
-    twit = Twit("Пример текста")
+    twit = Twit("Пример текста", "Автор")
     return twit.to_dict()
-
-#БЫЛО РАНЕЕ:
-#@app.route('/ping', methods=['GET'])
-#def ping():
-    #return jsonify({'response': 'pong'})
 
 @app.route('/twit', methods=['POST'])
 def create_twit():
@@ -42,8 +39,7 @@ def create_twit():
 
 @app.route('/twit', methods=['GET'])
 def read_twit():
-    return jsonify({'twits': [json.dumps(twit, cls=CustomJSONEncoder) for twit in twits]})
+    return jsonify({'twits': [twit.to_dict() for twit in twits]})
 
 if __name__ == '__main__':
     app.run(debug=True)
-
