@@ -36,10 +36,6 @@ def create_twit():
     twits.append(twit)
     return jsonify({'status': 'success'})
 
-@app.route('/twit', methods=['GET'])
-def read_twit():
-    return jsonify({'twits': [twit.to_dict() for twit in twits]})
-
 @app.route('/twit/', methods=['DELETE'])
 def delete_twit(twit_id):
     twit = next((t for t in twits if t['id'] == twit_id), None)
