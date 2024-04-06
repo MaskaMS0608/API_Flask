@@ -36,7 +36,7 @@ def create_twit():
     twits.append(twit)
     return jsonify({'status': 'success'})
 
-@app.route('/twit/', methods=['DELETE'])
+@app.route('/twit/<int: twit_id>', methods=['DELETE'])
 def delete_twit(twit_id):
     twit = next((t for t in twits if t['id'] == twit_id), None)
     if twit is not None:
