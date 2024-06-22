@@ -8,92 +8,37 @@
 Пользователь имеет возможность:
   создать,
   прочитать,
-  изменить,
-  удалить пост.
 _________________________________________
 
 Для взаимодействия между клиентом и сервером используются методы:
-
 GET — получение информации об объекте (посте).
 POST — создание нового объекта (поста).
-PUT — обновление, полная замена поста.
-DELETE — удаление поста.
 
 Для работы программы потребуется компьютер с операционной системой Windows. 
 Программа требует наличия установленного Python 3.11 или более поздней версии.
-Сервис написан в приложении PyCharm.
+Сервис написан в приложении VSCode.
 
 ________Порядок запуска сервиса__________
 
-/// Открыть проект в PyCharm
+/// Открыть проект в VSCode
 
-/// Выполнить в командной строке команду: python -m venv <имя виртуального окружения>.
+/// Установить фреймворк Flask: pip install flask
 
-/// Перейти в созданную директорию: cd <имя виртуального окружения>.
-
-/// Активировать окружение: \scripts\activate.
-
-/// Установить фреймворк Flask: pip install flask.
+/// Активировать виртуальное окружение: venv\Scripts\activate
 
 /// Команда для запуска сервиса: flask --app response.py run
 
 _________________________________________
 
-Тестирование приложения:
+Тестирование приложения в программе Postman:
 
 /// добавление нового поста
-```
-curl http://127.0.0.1:5000/api/v1/note/ -X POST -d "title|text"
-```
 
-### получение всего списка заметок
-```
-curl http://127.0.0.1:5000/twit/
-```
+Метод POST, команда localhost:5000/twit
+в виде строки (raw) в формате (JSON) вводится текст, например {"body": "Goodbye", "author": "MS"}
+ответ должен быть со статусом ("status") "success"
 
-### получение заметки по идентификатору / ID == 1
-```
-curl http://127.0.0.1:5000/api/v1/note/1/
-```
+/// получение всего списка постов
 
-### обновление текста заметки по идентификатору / ID == 1 /  новый текст == "new text"
-```
-curl http://127.0.0.1:5000/api/v1/note/1/ -X PUT -d "title|new text"
-```
+Метод GET, команда localhost:5000/twit.
 
-### удаление заметки по идентификатору / ID == 1
-```
-curl http://127.0.0.1:5000/api/v1/note/1/ -X DELETE
-```
-
-
-## пример исполнения команд с выводом
-
-```
-$ curl http://127.0.0.1:5000/api/v1/note/ -X POST -d "title|text"
-new id: 1
-
-$ curl http://127.0.0.1:5000/api/v1/note/
-1|title|text
-
-$ curl http://127.0.0.1:5000/api/v1/note/1/
-1|title|text
-
-$ curl http://127.0.0.1:5000/api/v1/note/1/ -X PUT -d "title|new text"
-updated
-
-$ curl http://127.0.0.1:5000/api/v1/note/1/
-1|title|new text
-
-$ curl http://127.0.0.1:5000/api/v1/note/1/ -X PUT -d "title|loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong text"
-failed to UPDATE with: text lenght > MAX: 120
-
-$ curl http://127.0.0.1:5000/api/v1/note/1/ -X PUT -d "loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong title|text"
-failed to UPDATE with: title lenght > MAX: 60
-
-$ curl http://127.0.0.1:5000/api/v1/note/1/ -X DELETE
-deleted
-
-$ curl http://127.0.0.1:5000/api/v1/note/
--- пусто --
-```
